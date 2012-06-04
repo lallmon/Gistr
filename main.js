@@ -49,39 +49,39 @@ define(function (require, exports, module) {
         // Retrieve selection
         var selectedText = EditorManager.getFocusedEditor().getSelectedText();
 
-        if(selectedText==""){
+        if (selectedText === "") {
             window.alert(EMPTY_MSG);
             return;
         }
 
         // Gist description to be sent to github
-        var postdata={
-              "description": defaultDescription,
-              "public": true,
-              "files": {
-                "mycode.js": {
-                  "content": selectedText
+        var postdata = {
+                "description": defaultDescription,
+                "public": true,
+                "files": {
+                    "mycode.js": {
+                        "content": selectedText
+                    }
                 }
-              }
             };
 
 
-        var postdataString=JSON.stringify(postdata);
+        var postdataString = JSON.stringify(postdata);
         
 
         // Send to github
         $.ajax({
             url: GITHUB_API_URL,
-            type:"POST",
-            dataType:"json",
-            data:postdataString,
+            type: "POST",
+            dataType: "json",
+            data: postdataString,
 
-            error:function(data){
+            error: function (data) {
                 window.alert(ERROR_MSG);
             },
 
-            success:function(data){
-                window.alert(SUCCESS_MSG+"\n"+data.html_url);
+            success: function (data) {
+                window.alert(SUCCESS_MSG + "\n" + data.html_url);
                 window.open(data.html_url);
             }
         });
