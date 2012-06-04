@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     
     function handleAction() {
   
-        // retrieve selection
+        // Retrieve selection
         var selectedText = EditorManager.getFocusedEditor().getSelectedText();
 
         if(selectedText==""){
@@ -46,7 +46,7 @@ define(function (require, exports, module) {
         var postdataString=JSON.stringify(postdata);
         
 
-        // send to github
+        // Send to github
         $.ajax({
             url: GITHUB_API_URL,
             type:"POST",
@@ -65,9 +65,8 @@ define(function (require, exports, module) {
 
     }
 
-
+    // Register the command and insert in the Edit menu
     CommandManager.register(MENU_NAME, MY_COMMAND_ID, handleAction);
-    
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU);
     menu.addMenuItem("menu-togist-toGist", MY_COMMAND_ID);
     

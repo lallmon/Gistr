@@ -1,9 +1,9 @@
 Brackets togist extension
 ===
 
-A simple brackets extension to easily create a Github Gist from the current text selection. To install, place in ```brackets/src/extensions/user``` folder. 
+A simple brackets extension to easily create a Github Gist from the current text selection. To install, place the ```togist``` folder inside the ```brackets/src/extensions/user``` folder, and reload Brackets.
 
-This extenstion was primarily created for learning how to create an extension for Brackets. As such, it is very experimental and should be used with caution -  even though it will most likely not harm your code.
+This extenstion was primarily created to learn how to create an extension for Brackets. As such, it is very experimental and should be used with caution -  even though it will most likely not harm your code.
 
 Usage
 =====
