@@ -91,6 +91,7 @@ define(function (require, exports, module) {
     // Register the command and insert in the Edit menu
     CommandManager.register(MENU_NAME, MY_COMMAND_ID, handleAction);
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU);
-    menu.addMenuItem("menu-togist-toGist", MY_COMMAND_ID);
+    menu.addMenuDivider();
+    menu.addMenuItem("menu-edit-toGist", MY_COMMAND_ID);
     
 });
