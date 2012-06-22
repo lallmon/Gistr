@@ -47,7 +47,7 @@ define(function (require, exports, module) {
     function handleAction() {
   
         // Retrieve selection
-        var selectedText = EditorManager.getFocusedEditor().getSelectedText();
+        var selectedText = EditorManager.getCurrentFullEditor().getSelectedText();
 
         if (selectedText === "") {
             window.alert(EMPTY_MSG);
@@ -92,6 +92,6 @@ define(function (require, exports, module) {
     CommandManager.register(MENU_NAME, MY_COMMAND_ID, handleAction);
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU);
     menu.addMenuDivider();
-    menu.addMenuItem("menu-edit-toGist", MY_COMMAND_ID);
+    menu.addMenuItem(MY_COMMAND_ID);
     
 });
