@@ -1,0 +1,12 @@
+{
+    "name": "dehats.togist",
+    "title": "To Gist",
+    "description": "Create an anonymous gist from the current selection.",
+    "homepage": "https://github.com/davidderaedt/togist",
+    "version": "1.0.0",
+    "author": "David Deraedt <dderaedt@adobe.com> (http://www.dehats.com)",
+    "license": "MIT",
+    "engines": {
+        "brackets": ">=0.20.0"
+    }
+}
