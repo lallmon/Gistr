@@ -36,12 +36,11 @@ define(function (require, exports, module) {
 
     var SUCCESS_MSG = "Gist successfully created at:";
     var ERROR_MSG = "Unable to create gist. Don't ask.";
-    var EMPTY_MSG = "Empty selection";
+    var EMPTY_MSG = "You need to select some text first.";
     var GITHUB_API_URL = "https://api.github.com/gists";
     var MY_COMMAND_ID = "togist.toGist";
     var MENU_NAME = "Create Gist";
-
-    var defaultDescription = "Gist created from Brackets";
+    var defaultDescription = "Gist created with Brackets.io";
 
     
     function handleAction() {
@@ -53,16 +52,17 @@ define(function (require, exports, module) {
             window.alert(EMPTY_MSG);
             return;
         }
-
         // Gist description to be sent to github
+        var filename = EditorManager.getActiveEditor().document.file.name;
         var postdata = {
                 "description": defaultDescription,
                 "public": true,
                 "files": {
-                    "mycode.js": {
-                        "content": selectedText
-                    }
                 }
+            };
+        //You can't put a variable into the key of JSON unless you inject it. BOOM.
+        postdata.files[filename] = {
+                "content": selectedText
             };
 
 
