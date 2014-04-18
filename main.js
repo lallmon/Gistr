@@ -28,70 +28,80 @@
 define(function (require, exports, module) {
     'use strict';
 
+    var CommandManager      = brackets.getModule("command/CommandManager"),
+        Dialogs             = brackets.getModule("widgets/Dialogs"),
+        EditorManager       = brackets.getModule("editor/EditorManager"),
+        Menus               = brackets.getModule("command/Menus"),
+        Strings             = brackets.getModule("strings"),
+        GistrDialogTemplate = require("text!gistr-dialog.html");
 
-    var CommandManager = brackets.getModule("command/CommandManager"),
-        EditorManager  = brackets.getModule("editor/EditorManager"),
-        Menus          = brackets.getModule("command/Menus");
-
-
-    var SUCCESS_MSG = "Gist successfully created at:";
-    var ERROR_MSG = "Unable to create gist. Don't ask.";
-    var EMPTY_MSG = "You need to select some text first.";
-    var GITHUB_API_URL = "https://api.github.com/gists";
-    var MY_COMMAND_ID = "togist.toGist";
-    var MENU_NAME = "Create Gist";
-    var defaultDescription = "Gist created with Brackets.io";
-
+    var emptyMessage        = "You need to select some text before you can create a Gist.",
+        errorMessage        = "Unable to create Gist for some reason.",
+        errorTitle          = "Error",
+        gistDescription     = "Created with Gister for Brackets.io",
+        githubApiUrl        = "https://api.github.com/gists",
+        menuName            = "Create Gist",
+        myCommandId         = "togist.toGist",
+        successTitle        = "Gist Successfully Created!";
     
     function handleAction() {
-  
         // Retrieve selection
         var selectedText = EditorManager.getCurrentFullEditor().getSelectedText();
-
+        //Throw an error in a modal if the selection is an empty string.
         if (selectedText === "") {
-            window.alert(EMPTY_MSG);
+            Dialogs.showModalDialog("error-dialog", errorTitle, emptyMessage);
             return;
         }
         // Gist description to be sent to github
-        var filename = EditorManager.getActiveEditor().document.file.name;
         var postdata = {
-                "description": defaultDescription,
+                "description": gistDescription,
                 "public": true,
                 "files": {
                 }
             };
-        //You can't put a variable into the key of JSON unless you inject it. BOOM.
-        postdata.files[filename] = {
+        //You can't use a variable as the key of JSON unless you do this.
+        postdata.files[EditorManager.getActiveEditor().document.file.name] = {
                 "content": selectedText
             };
 
-
         var postdataString = JSON.stringify(postdata);
-        
 
         // Send to github
         $.ajax({
-            url: GITHUB_API_URL,
+            url: githubApiUrl,
             type: "POST",
             dataType: "json",
             data: postdataString,
 
             error: function (data) {
-                window.alert(ERROR_MSG);
+                Dialogs.showModalDialog("error-dialog", errorTitle, errorMessage + data.error);
             },
-
             success: function (data) {
-                window.alert(SUCCESS_MSG + "\n" + data.html_url);
-                window.open(data.html_url);
+                var templateVars = {
+                    title: successTitle,
+                    data: data.html_url,
+                    buttons: [{ className: "primary", id: "ok", text: Strings.OK }]
+                };
+                Dialogs.showModalDialogUsingTemplate(Mustache.render(GistrDialogTemplate, templateVars));
+
+                var $dlg = $('.gistr-dialog.instance');
+                //Select the text in the input, so the user can copy to clipboard
+                //Is there a better place to do this?
+                $dlg.find('#gistr-data').select();
+                $dlg.find('#goToGist').on('click', function(){
+                    console.log("You clicked the button");
+                    brackets.app.openURLInDefaultBrowser(data.html_url);
+                });
+
+
             }
         });
 
     }
-
     // Register the command and insert in the Edit menu
-    CommandManager.register(MENU_NAME, MY_COMMAND_ID, handleAction);
+    CommandManager.register(menuName, myCommandId, handleAction);
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU);
     menu.addMenuDivider();
-    menu.addMenuItem(MY_COMMAND_ID);
+    menu.addMenuItem(myCommandId);
     
 });
