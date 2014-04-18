@@ -39,13 +39,10 @@ define(function (require, exports, module) {
         errorMessage        = "Unable to create Gist for some reason.",
         errorTitle          = "Error",
         gistDescription     = "Created with Gister for Brackets.io",
-        gistLinkText        = "Go to Gist",
         githubApiUrl        = "https://api.github.com/gists",
         menuName            = "Create Gist",
         myCommandId         = "togist.toGist",
-        successTitle        = "Gist Successfully Created!",
-        successMessage      = "You can now copy the Gist Location to your Clipboard.\n Or click 'Go to Gist' to open the Gist page in your browser. ";
-
+        successTitle        = "Gist Successfully Created!";
     
     function handleAction() {
         // Retrieve selection
@@ -82,20 +79,21 @@ define(function (require, exports, module) {
             success: function (data) {
                 var templateVars = {
                     title: successTitle,
-                    message: successMessage,
-                    linkText: gistLinkText,
                     data: data.html_url,
                     buttons: [{ className: "primary", id: "ok", text: Strings.OK }]
                 };
                 Dialogs.showModalDialogUsingTemplate(Mustache.render(GistrDialogTemplate, templateVars));
+
+                var $dlg = $('.gistr-dialog.instance');
                 //Select the text in the input, so the user can copy to clipboard
                 //Is there a better place to do this?
-                $('#gistr-data').focus(function (){
-                    if(this.value == this.defaultValue){
-                        this.select();
-                    }
+                $dlg.find('#gistr-data').select();
+                $dlg.find('#goToGist').on('click', function(){
+                    console.log("You clicked the button");
+                    brackets.app.openURLInDefaultBrowser(data.html_url);
                 });
-              //brackets.app.openURLInDefaultBrowser(data.html_url);
+
+
             }
         });
 

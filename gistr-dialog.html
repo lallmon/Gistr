@@ -6,13 +6,14 @@
     <div class="dialog-message">
       <div class="form-group">
         <p>
-        <input type="text" id="gistr-data" class="form-control" value="{{data}}"/>
-        {{message}}</p>
+        <input type="text" id="gistr-data" class="form-control" value="{{data}}"/> <strong>Hit CTRL/CMD-C to Copy Gist Location.</strong></p>
+        <p>You can also click to <em>"Go To Gist"</em> button to open the link in your browser.</p>
+
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <a src="{{data}}" class="btn btn-success">{{linkText}}</a>
+    <button id="goToGist" class="dialog-button btn primary">Go to Gist</button>
     {{#buttons}}
     <button class="dialog-button btn {{className}}" data-button-id="{{id}}">{{{text}}}</button>
     {{/buttons}}
