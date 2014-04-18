@@ -1,14 +1,14 @@
-Gistr, a quick Gist creator for Brackets.io
+Gistr: A quick and usable Gist creator for Brackets.io
 ===
 
 A simple brackets extension to easily create a Github Gist from the current text selection.
 
-This extenstion is built off of David Dehats "To Gist" extension, but with updated functionality and UX.
+This extenstion is built off of David Deraedt's ["To Gist"](https://github.com/davidderaedt/togist) extension, but with improved functionality and updated UX.
 
-- Uses Brackets.io Modals intstead of Alert boxes
-- Names the file the current file you're in
+- Uses Brackets.io Modals intstead of JS Alert boxes
+- Names the file the same as the file you pulled the text from
 - Easy to copy the gist location to your clipboard
-- Can also open the gist in your browser
+- Optionally open the gist in your browser
 
 
 Usage
@@ -18,9 +18,10 @@ A modal should appear allowing you to Copy to Clipboard, or open the Gist in you
 
 Known issues
 ===
-- Description and filename not editable
+- Description and filename not currently editable
 - Anonymous Gists only right now
 
 To Do
 ===
-- Contextual menu activation
+- Contextual menu activation will be the next update
+- Allowing gists to your account will be considered, would love some help on that.
