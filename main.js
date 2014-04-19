@@ -36,12 +36,12 @@ define(function (require, exports, module) {
         GistrDialogTemplate = require("text!gistr-dialog.html");
 
     var emptyMessage        = "You need to select some text before you can create a Gist.",
-        errorMessage        = "Unable to create Gist for some reason.",
+        errorMessage        = "Unable to create Gist:",
         errorTitle          = "Error",
-        gistDescription     = "Created with Gister for Brackets.io",
+        gistDescription     = "Created with Gistr for Brackets.io",
         githubApiUrl        = "https://api.github.com/gists",
-        menuName            = "Create Gist",
-        myCommandId         = "togist.toGist",
+        menuName            = "Create Gist from Selected Text",
+        myCommandId         = "lka.gistr",
         successTitle        = "Gist Successfully Created!";
     
     function handleAction() {
@@ -80,7 +80,7 @@ define(function (require, exports, module) {
                 var templateVars = {
                     title: successTitle,
                     data: data.html_url,
-                    buttons: [{ className: "primary", id: "ok", text: Strings.OK }]
+                    buttons: [{ className: "primary", id: "ok", text: Strings.OK }, { htmlId: "goToGist", className: "left", id: "ok", text: "Go To Gist" }]
                 };
                 Dialogs.showModalDialogUsingTemplate(Mustache.render(GistrDialogTemplate, templateVars));
 
