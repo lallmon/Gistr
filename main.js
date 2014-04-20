@@ -35,12 +35,12 @@ define(function (require, exports, module) {
         Strings             = brackets.getModule("strings"),
         GistrDialogTemplate = require("text!gistr-dialog.html");
 
-    var emptyMessage        = "You need to select some text before you can create a Gist.",
-        errorMessage        = "Unable to create Gist:",
-        errorTitle          = "Error",
+    var emptyMessage        = "You'll need to select some text before you can create a Gist.",
+        errorMessage        = "Unable to create Gist. :( ",
+        errorTitle          = "Error!",
         gistDescription     = "Created with Gistr for Brackets.io",
         githubApiUrl        = "https://api.github.com/gists",
-        menuName            = "Create Gist from Selected Text",
+        menuName            = "Create Gist with Selected Text",
         myCommandId         = "lka.gistr",
         successTitle        = "Gist Successfully Created!";
     
@@ -72,10 +72,9 @@ define(function (require, exports, module) {
             type: "POST",
             dataType: "json",
             data: postdataString,
-
             error: function (data) {
-                Dialogs.showModalDialog("error-dialog", errorTitle, errorMessage + data.error);
-            },
+                Dialogs.showModalDialog("error-dialog", errorTitle, errorMessage);
+            }   ,
             success: function (data) {
                 var templateVars = {
                     title: successTitle,
@@ -83,13 +82,10 @@ define(function (require, exports, module) {
                     buttons: [{ className: "primary", id: "ok", text: Strings.OK }, { htmlId: "goToGist", className: "left", id: "ok", text: "Go To Gist" }]
                 };
                 Dialogs.showModalDialogUsingTemplate(Mustache.render(GistrDialogTemplate, templateVars));
-
                 var $dlg = $('.gistr-dialog.instance');
-                //Select the text in the input, so the user can copy to clipboard
-                //Is there a better place to do this?
+                //Select the text in the input, so the user can copy to clipboard, which is probably the easiest way, as chrome locks system level clipboard out as a security issue.
                 $dlg.find('#gistr-data').select();
                 $dlg.find('#goToGist').on('click', function(){
-                    console.log("You clicked the button");
                     brackets.app.openURLInDefaultBrowser(data.html_url);
                 });
 
