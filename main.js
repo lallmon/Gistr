@@ -39,8 +39,9 @@ define(function (require, exports, module) {
         errorMessage        = "Unable to create Gist. :( ",
         errorTitle          = "Error!",
         gistDescription     = "Created with Gistr for Brackets.io",
+        gistrLink           = "https://github.com/LucasKA/Gistr",
         githubApiUrl        = "https://api.github.com/gists",
-        menuName            = "Create Gist with Selected Text",
+        menuName            = "Create Gist",
         myCommandId         = "lka.gistr",
         successTitle        = "Gist Successfully Created!";
     
@@ -54,7 +55,7 @@ define(function (require, exports, module) {
         }
         // Gist description to be sent to github
         var postdata = {
-                "description": gistDescription,
+                "description": gistDescription + gistrLink,
                 "public": true,
                 "files": {
                 }
@@ -99,5 +100,7 @@ define(function (require, exports, module) {
     var menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU);
     menu.addMenuDivider();
     menu.addMenuItem(myCommandId);
+    var contextMenu = Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU);
+    contextMenu.addMenuItem(myCommandId);
     
 });
