@@ -55,7 +55,7 @@ define(function (require, exports, module) {
         }
         // Gist description to be sent to github
         var postdata = {
-                "description": gistDescription + gistrLink,
+                "description": gistDescription + " " + gistrLink,
                 "public": true,
                 "files": {
                 }
