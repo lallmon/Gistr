@@ -1,3 +1,5 @@
+# Deprecated
+
 Gistr: A quick and usable Gist creator for Brackets.io
 ===
 
